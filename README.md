@@ -1,0 +1,1 @@
+# NotatkiStrukturalne_2
