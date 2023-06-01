@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include<ctype.h>
+void printASCIITable() {
+    int i;
+
+    for (i = 0; i <= 127; i++) {
+        printf("ASCII: %d, Znak: %c\n", i, i);
+    }
+}
+//prawie dobrze xd
+void JaPierdoleKurwa(char *napis)
+{
+    int i=0;
+    while(napis[i]!=0)
+    {
+        if(napis[i]==32)
+        {
+            napis[i]=46;
+        }
+
+        if(napis[i]>=60 && napis[i]<=90)
+        {
+            napis[i]=tolower(napis[i]);
+        }
+        i++;
+    }
+
+    napis[0]=toupper(napis[0]);
+}
+//jesli a i b male stoja obok siebie to wstawiamy miedzy je duze W
+void
+int main()
+{
+    char napis[] = "KAMIL NOWAK";
+    printf("%s\n", napis);
+    //printASCIITable();
+    JaPierdoleKurwa(napis);
+    printf("%s\n", napis);
+
+    return 0;
+}

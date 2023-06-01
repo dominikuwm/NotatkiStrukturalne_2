@@ -1,0 +1,77 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int** aloc(unsigned int n, unsigned int m) {
+  int** tab = (int**)malloc(n * sizeof(int*));
+  for (int i = 0; i < n; i++) {
+    tab[i] = (int*)malloc(m * sizeof(int));
+  }
+  return tab;
+}
+
+void wpisz(int** tab, unsigned int n, unsigned int m) {
+  printf("Podaj wartoœci dla tablicy:\n");
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < m; j++) {
+      printf("tab[%d][%d]: ", i, j);
+      scanf("%d", &tab[i][j]);
+    }
+  }
+}
+
+void wypisz(int** tab, unsigned int n, unsigned int m) {
+  printf("Zawartoœæ tablicy:\n");
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < m; j++) {
+      printf("%d ", tab[i][j]);
+    }
+    printf("\n");
+  }
+}
+
+void odwracanieKolumnMacierzy(int** tab, unsigned int n, unsigned int m) {
+  for (int j = 0; j < m; j++) {
+    int i = 0;
+    int k = n - 1;
+    while (i < k) {
+      int temp = tab[i][j];
+      tab[i][j] = tab[k][j];
+      tab[k][j] = temp;
+      i++;
+      k--;
+    }
+  }
+}
+
+void odwracanieWierszyMacierzy(int** tab, unsigned int n, unsigned int m) {
+  for (int i = 0; i < n; i++) {
+    int j = 0;
+    int k = m - 1;
+    while (j < k) {
+      int temp = tab[i][j];
+      tab[i][j] = tab[i][k];
+      tab[i][k] = temp;
+      j++;
+      k--;
+    }
+  }
+}
+
+int main() {
+  int** tab = aloc(2, 3);
+  wpisz(tab, 2, 3);
+  wypisz(tab, 2, 3);
+  odwracanieKolumnMacierzy(tab, 2, 3);
+  wypisz(tab, 2, 3);
+  odwracanieWierszyMacierzy(tab, 2, 3);
+  wypisz(tab, 2, 3);
+
+  // Zwolnienie pamiêci
+  for (int i = 0; i < 2; i++) {
+    free(tab[i]);
+  }
+  free(tab);
+
+  return 0;
+}
+

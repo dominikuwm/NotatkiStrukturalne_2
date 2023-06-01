@@ -1,0 +1,70 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int** aloc(unsigned int n, unsigned int m) {
+  int** tab = (int**)malloc(n * sizeof(int*));
+  for (int i = 0; i < n; i++) {
+    tab[i] = (int*)malloc(m * sizeof(int));
+  }
+  return tab;
+}
+
+void wpisz(int** tab, unsigned int n, unsigned int m) {
+  printf("Podaj wartoœci dla tablicy:\n");
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < m; j++) {
+      printf("tab[%d][%d]: ", i, j);
+      scanf("%d", &tab[i][j]);
+    }
+  }
+}
+
+void wypisz(int** tab, unsigned int n, unsigned int m) {
+  printf("Zawartoœæ tablicy:\n");
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < m; j++) {
+      printf("%d ", tab[i][j]);
+    }
+    printf("\n");
+  }
+}
+//A
+//zad 3 A
+int suma_elementow_przekatnej(int**tab,unsigned int n, unsigned int m){
+  int suma=0;
+  for(int i=0;i<n;i++){
+    suma+=tab[i][i];
+  }
+  return suma;
+}
+
+//B
+//zad 3 B
+int ParzysteNaBrzegach(int**tab,unsigned int n, unsigned int m){
+  int suma=0;
+  for(int i=0;i<n;i++){
+    for(int j=0;j<m;j++){
+      if(i==0 && j==0){
+        suma+=tab[i][j];
+      }else if(i==n-1 && j==0){
+        suma+=tab[i][j];
+      }else if(i==0 && j==m-1){
+        suma+=tab[i][j];
+      }else if(i==n-1 && j==m-1){
+        suma+=tab[i][j];
+      }else{}
+    }
+  }
+  return suma;
+}
+
+int main()
+{
+int** tab = aloc(2,3);
+wpisz(tab,2,3);
+wypisz(tab,2,3);
+printf("%d", suma_elementow_przekatnej(tab,2,3));
+printf("\n");
+printf("%d",ParzysteNaBrzegach(tab,2,3));
+
+}

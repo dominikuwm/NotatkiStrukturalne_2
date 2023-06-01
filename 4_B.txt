@@ -1,0 +1,82 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void przesun_kolumny(int** tab, int liczba_wierszy, int liczba_kolumn) {
+    int i, j;
+    int tmp[liczba_wierszy]; // Tablica tymczasowa do przechowywania wartoœci kolumny
+
+    // Przesuñ kolumny o 2 miejsca w prawo
+    for (j = liczba_kolumn - 1; j >= 2; j--) {
+        for (i = 0; i < liczba_wierszy; i++) {
+            tmp[i] = tab[i][j];
+        }
+        for (i = 0; i < liczba_wierszy; i++) {
+            tab[i][j] = tab[i][j - 2];
+        }
+        for (i = 0; i < liczba_wierszy; i++) {
+            tab[i][j - 2] = tmp[i];
+        }
+    }
+}
+
+
+int** aloc(unsigned int n, unsigned int m) {
+    int** tab = (int**)malloc(n * sizeof(int*));
+    for (int i = 0; i < n; i++) {
+        tab[i] = (int*)malloc(m * sizeof(int));
+    }
+    return tab;
+}
+
+void wpisz(int** tab, unsigned int n, unsigned int m) {
+    printf("Podaj wartoœci dla tablicy:\n");
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            printf("tab[%d][%d]: ", i, j);
+            scanf("%d", &tab[i][j]);
+        }
+    }
+}
+
+void wypisz(int** tab, unsigned int n, unsigned int m) {
+    printf("Zawartoœæ tablicy:\n");
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            printf("%d ", tab[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+/*
+void przesun_wiersze(int tablica[][liczba_kolumn], int liczba_wierszy, int liczba_kolumn) {
+    int i, j;
+    int tmp[liczba_kolumn]; // Tablica tymczasowa do przechowywania wartoœci wiersza
+
+    // Przesuñ wiersze o 2 miejsca w dó³
+    for (i = liczba_wierszy - 1; i >= 1; i--) {
+        for (j = 0; j < liczba_kolumn; j++) {
+            tmp[j] = tablica[i][j];
+        }
+        for (j = 0; j < liczba_kolumn; j++) {
+            tablica[i][j] = tablica[i - 1][j];
+        }
+        for (j = 0; j < liczba_kolumn; j++) {
+            tablica[i - 1][j] = tmp[j];
+        }
+    }
+}
+
+*/
+
+int main() {
+    int** tab = aloc(3, 3);
+    wpisz(tab, 3, 3);
+    wypisz(tab, 3, 3);
+    przesun_kolumny(tab, 3, 3);
+    wypisz(tab, 3, 3);
+
+
+
+    return 0;
+}

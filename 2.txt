@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <string.h>
+
+void insertW(char* str) {
+    int length = strlen(str);
+    char result[length * 2 + 1]; // Bufor na zmieniony napis
+    int resultIndex = 0; // Indeks aktualnej pozycji w wynikowym napisie
+
+    for (int i = 0; i < length; i++) {
+        // Jeœli aktualny znak to 'a' i kolejny znak to 'b', wstawiamy 'W' przed 'b'
+        if (str[i] == 'a' && str[i + 1] == 'b') {
+            result[resultIndex++] = 'a';
+            result[resultIndex++] = 'W';
+        }
+        else {
+            result[resultIndex++] = str[i];
+        }
+    }
+
+    result[resultIndex] = 0; // Dodajemy znak zakoñczenia napisu
+
+    printf("Wynik: %s\n", result);
+}
+
+int main() {
+    char str[] = "abcdabefab";
+
+    insertW(str);
+
+    return 0;
+}

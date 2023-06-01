@@ -1,0 +1,97 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Element {
+    int dane;
+    struct Element* nastepny;
+};
+
+void dodaj(struct Element** lista, int dane) {
+    struct Element* nowyElement = (struct Element*)malloc(sizeof(struct Element));
+    nowyElement->dane = dane;
+    nowyElement->nastepny = NULL;
+
+    if (*lista == NULL) {
+        *lista = nowyElement;
+    } else {
+        struct Element* aktualny = *lista;
+        while (aktualny->nastepny != NULL) {
+            aktualny = aktualny->nastepny;
+        }
+        aktualny->nastepny = nowyElement;
+    }
+}
+
+void wyswietl(struct Element* lista) {
+    struct Element* aktualny = lista;
+    while (aktualny != NULL) {
+        printf("%d ", aktualny->dane);
+        aktualny = aktualny->nastepny;
+    }
+    printf("\n");
+}
+
+int dlugosc_listy(struct Element* lista) {
+    int dlugosc = 0;
+    struct Element* aktualny = lista;
+    while (aktualny != NULL) {
+        dlugosc++;
+        aktualny = aktualny->nastepny;
+    }
+    return dlugosc;
+}
+
+struct Element* usun_srodkowy(struct Element* lista) {
+    int dlugosc = dlugosc_listy(lista);
+
+    if (dlugosc <= 2) {
+        // Lista ma 0 lub 1 element - zwróæ listê niezmienion¹
+        return lista;
+    }
+
+    int indeks_srodkowy = dlugosc / 2;
+    struct Element* aktualny = lista;
+    struct Element* poprzedni = NULL;
+
+    // Przesuñ siê do elementu œrodkowego
+    for (int i = 0; i < indeks_srodkowy; i++) {
+        poprzedni = aktualny;
+        aktualny = aktualny->nastepny;
+    }
+
+    // Usuñ element œrodkowy
+    poprzedni->nastepny = aktualny->nastepny;
+    free(aktualny);
+
+    return lista;
+}
+
+void zwolnij_pamiec(struct Element* lista) {
+    struct Element* aktualny = lista;
+    while (aktualny != NULL) {
+        struct Element* temp = aktualny;
+        aktualny = aktualny->nastepny;
+        free(temp);
+    }
+}
+
+int main() {
+    struct Element* lista = NULL;
+    dodaj(&lista, 1);
+    dodaj(&lista, 5);
+    dodaj(&lista, 8);
+    dodaj(&lista, 7);
+    dodaj(&lista, 2);
+
+    printf("Lista wejœciowa: ");
+    wyswietl(lista);
+
+    struct Element* lista_po_usunieciu = usun_srodkowy(lista);
+
+    printf("Lista po usuniêciu œrodkowego elementu: ");
+    wyswietl(lista_po_usunieciu);
+
+    zwolnij_pamiec(lista_po_usunieciu);
+
+    return 0;
+}
